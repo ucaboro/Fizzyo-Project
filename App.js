@@ -18,7 +18,6 @@ import {
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { Grid, Row, Col, Nav, ProgressBar } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 import Dashboard from './dashboard.js'
 import Users from './users.js'
 import Patients from './patients.js'
