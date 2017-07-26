@@ -10,6 +10,15 @@
   display: grid;
 }
 
+
+.navbar-brand{
+  height: 65px !important;
+}
+
+.navbar-right{
+  margin-top: 1% !important;
+}
+
 .Intro {
   font-size: large;
 }
@@ -40,15 +49,22 @@ color: #009FE3;
 
 
 .page{
-  margin-top: 7%;
+  margin-top: 1%;
 }
 
 .fullmenu{
-  padding-top: 60px;
-  position:fixed;
-
+  /*padding-top: 60px;*/
+position:absolute;
   height: 100%;
+}
 
+
+.navbar-inverse{
+border-radius: 0px !important;
+}
+
+.belowNavBar{
+  margin-top: -20px;
 }
 /*styling for side menu */
 
@@ -135,4 +151,11 @@ color: #009FE3;
 
 .customDrop{
   width: 130px;
+}
+
+@media (max-width: 768px){
+  .fullmenu{
+    position: relative;
+
+}
 }
