@@ -10,68 +10,6 @@ import SideMenu from '../components/SideMenu.js'
 import Dashboard from '../containers/dashboard.js'
 
 
-/*export default class Login extends Component {
-
-
-  testLogin = () => {
-
-    let roleBtn = document.getElementById('role-testing')
-    let selectedRole = roleBtn.options[roleBtn.selectedIndex].value
-
-    let username
-    //setting the testing role based on the selected role
-    switch(selectedRole){
-      case "researcher": username = "test-researcher"
-       break
-      case "administrator": username = "test-admin"
-       break
-      case "patient": username = "test-patient"
-      break
-
-    }
-
-    let password = "FizzyoTesting2017"
-    //setting response message in HTML
-    let responseMsg = document.getElementById('test-user-login')
-
-    request
-  .post('https://api.fizzyo-ucl.co.uk/api/v1/auth/test-token')
-  .set('Content-Type', 'application/x-www-form-urlencoded')
-  .send({ username, password})
-  .end(function(err, res){
-    if (err || !res.ok) {
-         responseMsg.innerHTML = "error"
-       } else {
-         responseMsg.innerHTML = JSON.stringify(res.body)
-       }
-     });
-
-  }
-
-
-
-render(){
-  return(
-    <div>
-    <Grid>
-    <Row className="top-buffer">
-    <Col md={12}>
-    <Panel header="Testing user authorisation" bsStyle="primary">
-    <DropdownButtonComp id="role-testing" title="Select Role" option={["researcher", "administrator", "patient" ]}/>
-    <Row className="top-buffer">
-    <Col md={3}>
-    <Button id="login-user-button" bsStyle="primary" onClick={this.testLogin}>Login</Button>
-    <p className="lead">response:  <strong id="test-user-login">---</strong></p>
-    </Col>
-    </Row>
-    </Panel>
-    </Col>
-    </Row>
-    </Grid>
-    </div>
-  )
-}
-}*/
 
 export default class LoginControl extends Component{
 constructor(props){
@@ -192,12 +130,12 @@ function Login (props){
     <Grid>
     <Row className="top-buffer">
     <Col md={12}>
-    <Panel header="Testing user authorisation" bsStyle="primary">
+    <Panel header="Testing user authorisation with different roles" bsStyle="primary">
     <DropdownButtonComp id="role-testing" title="Select Role" option={["researcher", "administrator", "patient" ]}/>
     <Row className="top-buffer">
     <Col md={3}>
     <Button id="login-user-button" bsStyle="primary" onClick={props.onClick}>Login</Button>
-    <p className="lead">response:  <strong id="test-user-login">---</strong></p>
+    <p><strong id="test-user-login"></strong></p>
     </Col>
     </Row>
     </Panel>
