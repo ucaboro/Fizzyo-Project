@@ -117,12 +117,6 @@
   background-color: #4f5b69;
 }
 
-.addUser {
-  margin-right: 10%;
-  margin-top: 5%;
-  margin-left: 30%;
-  width: 40%;
-}
 
 .changeUser {
   margin-right: 10%;
@@ -168,4 +162,21 @@ p.lowercase {
 
 p.capitalize {
     text-transform: capitalize;
+}
+.addUserPanel{
+margin-right: 5%;
+margin-top: 5%;
+margin-left: 5%;
+max-width: 850px;
+}
+
+.panel-heading{
+  font-size: 27px;
+  text-align: center;
+  text-shadow: 2px 1px 2px black;
+}
+
+.loader{
+  margin-left: 50%;
+  margin-top: 30%;
 }

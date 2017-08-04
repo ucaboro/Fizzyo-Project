@@ -8,6 +8,7 @@ import Users from '../containers/users.js'
 import MainPage from './mainPage.js'
 import SideMenu from '../components/SideMenu.js'
 import Dashboard from '../containers/dashboard.js'
+import Spinner from 'react-spinkit'
 
 
 
@@ -76,7 +77,9 @@ handleLogoutClick(){
     let page = null
     let header = null
     let menu = null
+
     if(isLoggedIn){
+
       header = <NavHeader onClick={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
 
       switch(Auth.user.role){
@@ -146,7 +149,7 @@ function Login (props){
   )
 }
 
-class Auth{
+export class Auth{
   static user = {
     id: '',
     role: '',
