@@ -15,51 +15,64 @@ import {
   Alert
 } from 'react-bootstrap';
 import DropdownButtonComp from '../components/DropDown.js'
-import Login, {Auth} from '../containers/login.js'
+import Login, {AuthTest} from '../containers/login.js'
+import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
 import request from 'superagent'
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export default class Users extends Component{
   constructor(props){
     super(props)
 
+    /**
+    * Setting Value and Copied states for Copy to CLipboard functionality
+    * binding functions to be able to uset setState()
+    */
+    this.state = {value:'', copied: false}
+    this.Copy = this.Copy.bind(this)
+    this.createInvCode = this.createInvCode.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
-  createInvCode(){
-    let token = 'Bearer 7BErm0wMvbmONA633NOYNrEeYAlO1nqV'//"Bearer " + Auth.accessToken
-    let infoToken = document.getElementById('authToken')
-    infoToken.innerHTML = token
+onChange(){
+  //updating the value of the generate code for clipboard copying
+  let val = document.getElementById('invCode').value
+  this.setState({value:val, copied: false});
+}
 
-    let role = "researcher"//document.getElementById('roles').value
+Copy() {
+  //restricting update if the state.value hasn't been changed
+  if(this.state.value!=''){
+  this.setState({copied: true});}
+}
 
+/**
+*
+*Code to create an invite via API POST request
+*(The superagent send OPTIONS request first for security and then proceeds with the POST)
+*
+*/
+  createInvCode(e){
+    e.preventDefault()
+    let token = "Bearer " + Auth.accessToken //as required by https://api.fizzyo-ucl.co.uk/
+    let generatedCode = document.getElementById('invCode')
+    var self = this //to allow changing global state inside the function
+
+    let role = document.getElementById('roles').value
     request
     .post('https://api.fizzyo-ucl.co.uk/api/v1/invitation')
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'Bearer 7BErm0wMvbmONA633NOYNrEeYAlO1nqV')
-   .send(role)
-   .end(function(err, res){
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    .set('Authorization', token)
+    .send({role})
+    .end(function(err, res){
      if (err || !res.ok) {
           alert(err)
         } else {
-          alert("success")
-          infoToken.innerHTML = JSON.stringify(res.body)
-
+          generatedCode.value = JSON.stringify(res.body.code)
+          self.setState({value:generatedCode.value, copied: false})
         }
-})
-  /*  request
-  .post('https://api.fizzyo-ucl.co.uk/api/v1/invitation')
-  .set('Authorization', token)
-  .set('Content-Type', 'application/x-www-form-urlencoded')
-  .send("researcher")
-  .end(function(err, res){
-    if (err || !res.ok) {
-         alert(err)
-       } else {
-         alert("success")
-         infoToken.innerHTML = JSON.stringify(res.body)
-
-       }
-     });*/
-  }
+      })
+    }
 
 
 
@@ -67,61 +80,80 @@ export default class Users extends Component{
     return(
       <div className="addUserPanel">
       <Panel header = "Create an invite for a user" bsStyle = "primary" >
+
         <Alert bsStyle="info">
           <p><strong>To create an invite: </strong> generate the code for the specified role and pass it to the user to register. </p>
           <strong>They will need to have Windows Live account! </strong>
         </Alert>
       <Form horizontal>
-        <FormGroup controlId="formhorizontalName">
-        <Col lg={12}>
-          <FormControl type="text" placeholder="First Name"/>
-        </Col>
-      </FormGroup>
-      <FormGroup controlId="formhorizontalSurname">
-      <Col lg={12}>
-        <FormControl type="surname" placeholder="Last Name"/>
-      </Col>
-      </FormGroup>
-      </Form>
 
-      <Form horizontal className="top-buffer">
-
-
-        <FormGroup controlId="formhorizontalEmail">
-        <Col lg={12} lg={12}>
-          <FormControl type="email" placeholder="email"/>
-        </Col>
-      </FormGroup>
-
-
-        <FormGroup controlId="formhorizontalEmail">
-        <Col lg={12} lg={12}>
+        <FormGroup controlId="formhorizontalRoles">
+        <Col lg={12} sm={10}>
           <FormControl.Static>
               <DropdownButtonComp id="roles" title="Select Role" option={["researcher", "administrator", "patient"]}/>
             </FormControl.Static>
         </Col>
         </FormGroup>
 
+        <FormGroup controlId="formhorizontalSubmit">
+        <Col lg={12} sm={10}>
+          <FormControl.Static>
+              <input type="submit" value="Create Invitation Code" className="btn btn-block btn-success top-buffer addUser" onClick={this.createInvCode}></input>
+            </FormControl.Static>
+        </Col>
+        </FormGroup>
 
+        <FormGroup controlId="formhorizontalCode">
+        <Col lg={12} sm={10}>
+          <FormControl.Static>
+            <FormControl id="invCode" placeholder="generated code" onChange={this.onChange}/>
+            </FormControl.Static>
+        </Col>
+        </FormGroup>
+
+        <FormGroup controlId="formhorizontalCopy">
+          <Col lg={6} sm={10}>
+          <FormControl.Static>
+            <CopyToClipboard text={this.state.value} onCopy={this.Copy}>
+              <Button>Copy</Button>
+            </CopyToClipboard>
+            </FormControl.Static>
+        </Col>
+        </FormGroup>
       </Form>
-
-
-
-      <Col lg={12}>
-        <input type="submit" value="Create Invitation Code" className="btn btn-block btn-success top-buffer addUser" onClick={this.createInvCode}></input>
-        <p>Generated Invitation Code: <strong id="test-user-login"></strong>---</p>
-        <p>You Auth token <strong id="authToken">---</strong></p>
-      </Col>
-
-        </Panel>
-      </div>
-
-
+      <Col lgOffset={3} sm={10}>
+      {this.state.copied ? <CopiedMessage/>: <Info/>}
+    </Col>
+  </Panel>
+</div>
     )
   }
 }
 
-const Users2 = () => (
+//To support UX
+function Info (){
+  return (
+    <Col className="top-buffer center" lg={6}>
+    <Alert bsStyle="warning">
+      <p id="copyMsg"><strong>Click copy </strong> and send to the user to register at www.fizzyo-ucl.ac.uk </p>
+    </Alert>
+    </Col>
+  )
+}
+
+//Notify user on sucessfull copying
+function CopiedMessage (){
+  return (
+    <Col className="top-buffer center" lg={6}>
+    <Alert bsStyle="success">
+      <p id="copyMsg"><strong>Copied to clipboard</strong></p>
+    </Alert>
+    </Col>
+  )
+}
+
+//Previous version with a more standard registration screen
+const UsersPrevVersion = () => (
 
   <div className="panel panel-default addUser">
     <div className="panel-heading">

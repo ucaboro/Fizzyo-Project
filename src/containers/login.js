@@ -53,10 +53,10 @@ handleLoginClick = () =>{
          responseMsg.innerHTML = JSON.stringify(res.body)
 
          //Setting LoggedIn user's variables
-         Auth.accessToken = res.body.accessToken
-         Auth.user.id = res.body.user.idea
-         Auth.user.role = res.body.user.role
-         Auth.user.name = res.body.user.firstName
+         AuthTest.accessToken = res.body.accessToken
+         AuthTest.user.id = res.body.user.idea
+         AuthTest.user.role = res.body.user.role
+         AuthTest.user.name = res.body.user.firstName
 
          //Seeting isLoggedIn to true on success
          self.setState({isLoggedIn : true})
@@ -80,9 +80,9 @@ handleLogoutClick(){
 
     if(isLoggedIn){
 
-      header = <NavHeader onClick={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
+      header = <NavHeader onClick={this.handleLogoutClick} username={AuthTest.user.name} role={AuthTest.user.role}/>
 
-      switch(Auth.user.role){
+      switch(AuthTest.user.role){
         case "administrator":
           page =<MainPage options={["Home", "Dashboard", "Users", "Patients", "System Status", "System Settings"]}/>
         break
@@ -95,7 +95,7 @@ handleLogoutClick(){
       }
 
     } else {
-      header = <NavHeader disabled="disabled"/>
+      header = ''//<NavHeader disabled="disabled"/>
       page =  <Login onClick = {this.handleLoginClick}/>
 
     }
@@ -149,7 +149,7 @@ function Login (props){
   )
 }
 
-export class Auth{
+export class AuthTest{
   static user = {
     id: '',
     role: '',

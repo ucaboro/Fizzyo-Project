@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import styles from './App.css';
 import MainPage from './containers/mainPage.js'
 import LoginControl from './containers/login.js'
+import WinLiveLogin from './containers/winLiveLogin.js'
 //import LoginControl from './containers/login.js'
 import NavHeader from './components/NavHeader.js'
 import Users from './containers/users.js'
+import Example, {Patients} from './containers/patients.js'
 import Spinner from 'react-spinkit'
 
 export default class App extends Component {
@@ -27,7 +29,7 @@ componentDidMount() {
   render() {
      const { loading } = this.state;
 
-    return ( this.state.loading ? <LoadingSpinner/> : <LoginControl/>)
+    return ( this.state.loading ? <LoadingSpinner/> : <WinLiveLogin/>)
 
   }
 }
