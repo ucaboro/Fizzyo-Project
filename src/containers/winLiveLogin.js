@@ -9,9 +9,9 @@ import MainPage from './mainPage.js'
 import SideMenu from '../components/SideMenu.js'
 import Dashboard from '../containers/dashboard.js'
 import Spinner from 'react-spinkit'
-import logo from '../components/fizzyo_logo.svg';
+import logo from '../components/fizzyo_logo.svg'
 import LoginControl from '../containers/login.js'
-
+//test
 
 export default class WinLiveLogin extends Component{
 constructor(props){
