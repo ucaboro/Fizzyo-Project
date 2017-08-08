@@ -299,8 +299,8 @@ min-width: 250px !important;
 .react-autosuggest__container--open .react-autosuggest__suggestions-container {
   display: block;
   position: relative;
-  top: 5px;
-  
+
+
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -358,4 +358,17 @@ min-width: 250px !important;
   border-radius: 70px !important;
   padding: 0 0 !important;
 
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.searchLoader {
+  position: absolute;
+  top: -10px;
+  right: 50%;
+
+  width: 24px;
+  height: 24px;
 }

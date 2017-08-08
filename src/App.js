@@ -6,8 +6,9 @@ import WinLiveLogin from './containers/winLiveLogin.js'
 //import LoginControl from './containers/login.js'
 import NavHeader from './components/NavHeader.js'
 import Users from './containers/users.js'
-import Example, {Patients} from './containers/patients.js'
+import Example from './containers/patients.js'
 import Spinner from 'react-spinkit'
+import Debounce from './containers/debouncetest.js'
 
 export default class App extends Component {
   constructor() {
