@@ -372,3 +372,8 @@ min-width: 250px !important;
   width: 24px;
   height: 24px;
 }
+
+.patientsLoader{
+margin-left: 50%;
+margin-top: 7%;
+}

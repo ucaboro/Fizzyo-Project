@@ -9,6 +9,7 @@ import MainPage from './mainPage.js'
 import SideMenu from '../components/SideMenu.js'
 import Dashboard from '../containers/dashboard.js'
 import Spinner from 'react-spinkit'
+import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
 
 
 
@@ -52,12 +53,13 @@ handleLoginClick = () =>{
        } else {
          responseMsg.innerHTML = JSON.stringify(res.body)
 
+
          //Setting LoggedIn user's variables
          AuthTest.accessToken = res.body.accessToken
-         AuthTest.user.id = res.body.user.idea
+         AuthTest.user.id = res.body.user.id
          AuthTest.user.role = res.body.user.role
          AuthTest.user.name = res.body.user.firstName
-
+         //alert(Auth.accessToken)
          //Seeting isLoggedIn to true on success
          self.setState({isLoggedIn : true})
        }

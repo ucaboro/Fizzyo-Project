@@ -9,6 +9,7 @@ import Users from './containers/users.js'
 import Example from './containers/patients.js'
 import Spinner from 'react-spinkit'
 import Debounce from './containers/debouncetest.js'
+import PatientData from './containers/patientsData.js'
 
 export default class App extends Component {
   constructor() {

@@ -5,6 +5,12 @@ import Autosuggest from 'react-autosuggest';
 import {ListGroup, Table, ListGroupItem, Panel, Alert, Row, Col, Grid, Button} from 'react-bootstrap';
 import debounce from 'lodash';
 import Spinner from 'react-spinkit'
+import request from 'superagent'
+import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
+
+
+
+
 
 // Imagine you have a list of names that you'd like to autosuggest.
 const patients = [
@@ -14,19 +20,14 @@ const patients = [
     email: 'mas1311@ya.ru'
   },
   {
+    name: 'James',
+    surname: 'McAdden',
+    email: 'jimmy1@live.com'
+  },
+  {
     name: 'Andrew',
-    surname: 'Jonson',
-    email: 'jonson@gmail.com'
-  },
-  {
-    name: 'Anna',
-    surname: 'Fedorova',
-    email: 'ann.fedorova.1@yandex.ru'
-  },
-  {
-    name: 'Anthony',
-    surname: 'Sleight',
-    email: 'anthony@live.com'
+    surname: 'Jackson',
+    email: 'andrew@live.com'
   },
 
 ];
@@ -68,13 +69,18 @@ function alwaysRenderSuggestions() {
 const renderSuggestion = suggestion => (
   <Grid>
     <Row>
+            <Link to={`patients/${suggestion.name}`} activeClassName="active">
       <Col md={4}>
+
     <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png"/>
     </Col>
     <Col md={8}>
+      <h5>{suggestion.id}</h5>
     <h3>{suggestion.name + " " + suggestion.surname}</h3> <br/>
     <p>{suggestion.email}</p>
+
     </Col>
+        </Link>
     </Row>
   </Grid>
 )
@@ -115,6 +121,27 @@ export default class Example extends Component {
     // 5000ms debouncing.
     this.debouncedLoadSuggestions = _.debounce(this.loadSuggestions, 500);
   }
+
+/*    componentWillMount(){
+    //retrieving patient records from the API
+    request
+    .get('https://api.fizzyo-ucl.co.uk/api/v1/patient-records')
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    .set('Authorization', "Bearer " + Auth.accessToken)
+
+    .end(function(err, res){
+     if (err || !res.ok) {
+          alert(err)
+        } else {
+          alert("success " + JSON.stringify(res.body.length))
+
+
+          {patients.push(res.body.request)}
+          //generatedCode.value = JSON.stringify(res.body.code)
+
+        }
+      })
+  }*/
 
   loadSuggestions(value) {
     this.setState({
@@ -196,9 +223,9 @@ setTimeout(() => {
 
     </Col>
     <Col md={4} sm={4}  xs={8}>
-      <NavLink to="/patients/patientData">
+
     <Button className="patientsBtn" bsStyle="primary">Edit</Button>
-      </NavLink>
+
     &nbsp;
     &nbsp;
     &nbsp;
