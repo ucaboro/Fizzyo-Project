@@ -64,7 +64,7 @@ export default class PatientsData extends Component {
 
     return (
 
-      <div className="patientsRecords">
+      <div className="PatientRecords">
 
         <Panel header={this.props.match.params.patientName + "'s details"} bsStyle="primary">
           <Row>

@@ -78,7 +78,7 @@ Copy() {
 
   render(){
     return(
-      <div className="addUserPanel">
+      <div className="PatientRecords">
       <Panel header = "Create an invite for a user" bsStyle = "primary" >
 
         <Alert bsStyle="info">

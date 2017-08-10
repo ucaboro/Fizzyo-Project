@@ -38,8 +38,7 @@ export default class NavHeader extends Component{
 
             <Nav pullRight>
               <UserGreeting name={this.props.username}/>
-              <NavItem  className={this.props.disabled}  eventKey={2} href="#">Settings</NavItem>
-              <NavItem  className={this.props.disabled}  eventKey={3} onClick={this.props.onClick}>Logout</NavItem>
+              <NavItem  className={this.props.disabled}  eventKey={3} onClick={this.props.onClickLogout}>Logout</NavItem>
             </Nav>
           </Navbar.Collapse>
       </Navbar>

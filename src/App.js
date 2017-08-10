@@ -10,6 +10,7 @@ import Example from './containers/patients.js'
 import Spinner from 'react-spinkit'
 import Debounce from './containers/debouncetest.js'
 import PatientData from './containers/patientsData.js'
+import Syssettings from './containers/systemSettings.js'
 
 export default class App extends Component {
   constructor() {
@@ -29,6 +30,7 @@ componentDidMount() {
 
 //<Spinner name="chasing-dots" color="steelblue"/>
   render() {
+
      const { loading } = this.state;
 
     return ( this.state.loading ? <LoadingSpinner/> : <WinLiveLogin/>)

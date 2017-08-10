@@ -13,6 +13,7 @@ import logo from '../components/fizzyo_logo.svg'
 import LoginControl from '../containers/login.js'
 
 
+
 export default class WinLiveLogin extends Component{
 constructor(props){
   super(props)
@@ -80,7 +81,7 @@ this.setState({isLoggedIn: "loading"})
 
           //Setting LoggedIn user's variables
           Auth.accessToken = res.body.accessToken
-          Auth.user.id = res.body.user.idea
+          Auth.user.id = res.body.user.id
           Auth.user.role = res.body.user.role
           Auth.user.name = res.body.user.firstName
           self.setState({isLoggedIn: "yes"})
@@ -149,7 +150,11 @@ request
 //Logging out
 handleLogoutClick(){
   this.setState({isLoggedIn: "no"})
+}
 
+//retrieving Settings
+handleSettingsClick(){
+<Link to="/syssettings"/>
 }
 
 
@@ -165,14 +170,14 @@ handleLogoutClick(){
     if(isLoggedIn=="yes"){
 
       //The header (navbar) component will have the username and role + Logout button
-      header = <NavHeader onClick={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
+      header = <NavHeader onClickSettings={this.handleSettingsClick} onClickLogout={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
 
       switch(Auth.user.role){
         case "administrator":
-          page =<MainPage options={["Home", "Dashboard", "Users", "Patients", "System Status", "System Settings"]}/>
+          page =<MainPage options={[ "Dashboard", "Users", "Patients", "System Status", "System Settings"]}/>
         break
         case "researcher":
-          page =<MainPage options={["Home", "Dashboard", "Users", "Patients"]}/>
+          page =<MainPage options={["Dashboard", "Users", "Patients"]}/>
         break
         case "patient":
           page =<Dashboard />

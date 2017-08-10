@@ -48,14 +48,14 @@ export default class MainPage extends Component {
 
               <SideMenu  option={this.props.options}/>
 
-              <div className="col-sm-offset-3 col-md-offset-3 page">
-
+              <div className="col-sm-offset-2 col-md-offset-2 page">
+              <Route exact path="/" component={Patients}/>
               <Route path="/home" component={Home}/>
               <Route path="/users" component={Users}/>
               <Route path="/dashboard" component={Dashboard}/>
               <Route path="/systatus" component={Systatus}/>
               <Route path="/syssettings" component={Syssettings}/>
-              <Route path="/callback" component={Home}/>
+              <Route path="/callback" component={Patients}/>
               <Route path="/login" component={Login}/>
 
 

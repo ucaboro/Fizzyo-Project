@@ -46,12 +46,15 @@
 
 .page {
   margin-top: 1%;
+  padding-left: 15%;
+
 }
 
 .fullmenu {
   /*padding-top: 60px;*/
 height: 100%;
 position: absolute;
+z-index: 2;
 
 }
 
@@ -82,17 +85,19 @@ position: absolute;
   list-style: none;
   padding: 0px;
   margin: 0px;
-  line-height: 35px;
+  line-height: 45px;
   cursor: pointer;
 }
 
 .nav-side-menu li {
-  padding-left: 3px;
-  border-left: 3px solid #2e353d;
+
+  /*padding-left: 3px;
+  border-left: 3px solid #2e353d;*/
   border-bottom: 1px solid #23282e;
 }
 
 .nav-side-menu li a {
+  padding-left: 4px;
   text-decoration: none;
   color: #e1ffff;
   display: block;
@@ -102,6 +107,11 @@ position: absolute;
   padding-left: 10px;
   width: 20px;
   padding-right: 20px;
+}
+
+.sidebar{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .nav-side-menu li:hover {
@@ -150,6 +160,12 @@ position: absolute;
 @media (max-width: 768px) {
   .fullmenu {
     position: relative;
+  }
+
+  .page{
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 
@@ -260,9 +276,9 @@ min-width: 250px !important;
 }
 
 .PatientRecords{
-  margin-right: 5%;
+
   margin-top: 5%;
-  margin-left: 5%;
+
   max-width: 850px;
 }
 
