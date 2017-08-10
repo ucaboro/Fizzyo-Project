@@ -55,10 +55,10 @@ handleLoginClick = () =>{
 
 
          //Setting LoggedIn user's variables
-         AuthTest.accessToken = res.body.accessToken
-         AuthTest.user.id = res.body.user.id
-         AuthTest.user.role = res.body.user.role
-         AuthTest.user.name = res.body.user.firstName
+         Auth.accessToken = res.body.accessToken
+         Auth.user.id = res.body.user.id
+         Auth.user.role = res.body.user.role
+         Auth.user.name = res.body.user.firstName
          //alert(Auth.accessToken)
          //Seeting isLoggedIn to true on success
          self.setState({isLoggedIn : true})
