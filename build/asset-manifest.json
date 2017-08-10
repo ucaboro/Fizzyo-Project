@@ -1,12 +1,7 @@
 {
-  "main.css": "static/css/main.ca923346.css",
-  "main.css.map": "static/css/main.ca923346.css.map",
+  "main.css": "static/css/main.b9893eea.css",
+  "main.css.map": "static/css/main.b9893eea.css.map",
   "main.js": "static/js/main.b0e3faf0.js",
   "main.js.map": "static/js/main.b0e3faf0.js.map",
-  "static\\media\\fizzyo_logo.svg": "static/media/fizzyo_logo.784b078e.svg",
-  "static\\media\\glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
-  "static\\media\\glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.89889688.svg",
-  "static\\media\\glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
-  "static\\media\\glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
-  "static\\media\\glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2"
+  "static\\media\\fizzyo_logo.svg": "static/media/fizzyo_logo.784b078e.svg"
 }
