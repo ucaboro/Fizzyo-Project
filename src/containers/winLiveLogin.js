@@ -62,8 +62,8 @@ var self = this
  let winLiveToken = document.getElementById("windows-live-token")
  var authCode = this.urlParam('code')
  winLiveToken.innerHTML = authCode
- let redirectUri = window.location.href.split('?')[0];
-
+ //let redirectUri = window.location.href.split('?')[0];
+let redirectUri = "http://localhost:3000/callback"
 //trying to retrieve Fizzyo API auth token if the Windows Token has been already retrieved
   if(authCode!=null && authCode!="undefined"){
 
@@ -106,9 +106,8 @@ var authCode = this.urlParam('code')
 let apiUrl = 'https://login.live.com/oauth20_authorize.srf';
 let clientId = '65973b85-c34f-41a8-a4ad-00529d1fc23c';
 let scopes = 'wl.basic wl.offline_access wl.signin wl.phone_numbers wl.emails';
-//let redirectUri = window.location.protocol+"//"+ window.location.hostname+":" +window.location.port;
-let redirectUri = "https://fizzyo-ucl.co.uk"
 
+let redirectUri = window.location.protocol+"//"+ window.location.hostname+":" +window.location.port;
 var authRequestUri = apiUrl + '?client_id=' + clientId + '&scope=' + encodeURIComponent(scopes) + '&response_type=code&redirect_uri=' + encodeURIComponent(redirectUri);
 
 let btn = document.getElementById("windows-live-button")
