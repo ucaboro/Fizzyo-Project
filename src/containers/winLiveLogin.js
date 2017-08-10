@@ -23,7 +23,7 @@ constructor(props){
   this.redirectToWindowsLive = this.redirectToWindowsLive.bind(this)
   this.registerClick = this.registerClick.bind(this)
   this.handleLogoutClick =this.handleLogoutClick.bind(this)
-  this.state = {registerScreen: '', isLoggedIn:"no"}
+  this.state = {registerScreen: '', isLoggedIn:"no", toRegister: ''}
 }
 
 //switch view to the Register screen without redirection
@@ -45,12 +45,12 @@ switchToLogin(){
 *
 */
 
+
 //Recieving the code from Windows Live
 urlParam(name){
  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href)
  return (results && results[1]) || undefined
  }
-
 
 /*
 *On getting back from the Windows Live authorisation screen
@@ -61,15 +61,42 @@ componentDidMount(){
 var self = this
  let winLiveToken = document.getElementById("windows-live-token")
  var authCode = this.urlParam('code')
- winLiveToken.innerHTML = authCode
+
+ winLiveToken.innerHTML =  authCode
+
  let host = window.location.hostname
  let port = host === 'localhost' ? `:${window.location.port}/callback` : '';
  let redirectUri = `${window.location.protocol}//${host}${port}`
-
  //let redirectUri = window.location.href.split('?')[0];
 //let redirectUri = window.location.protocol+"//"+ window.location.hostname+":" +window.location.port+'/callback';
+
+  //trying to go through - if error, allow user to use their Windows Live token to register
+
+  request
+  .post('https://api.fizzyo-ucl.co.uk/api/v1/auth/token')
+  .set('Content-Type', 'application/x-www-form-urlencoded')
+  .send({redirectUri, authCode})
+  .end(function(err, res){
+   if (err || !res.ok) {
+        console.log("couldn't go through. User should register first "+err)
+        self.setState({toRegister:true})
+        self.setState({isLoggedIn: "no"})
+      } else {
+        Auth.accessToken = res.body.accessToken
+        Auth.user.id = res.body.user.id
+        Auth.user.role = res.body.user.role
+        Auth.user.name = res.body.user.firstName
+
+        self.setState({toRegister:false})
+        self.setState({isLoggedIn: "yes"})
+        //Setting LoggedIn user's variables
+
+      }
+    })
+
+
 //trying to retrieve Fizzyo API auth token if the Windows Token has been already retrieved
-  if(authCode!=null && authCode!="undefined"){
+  if(authCode!=null && authCode!="undefined" && this.state.toRegister!=true && this.state.toRegister!=''){
 
 //POST request to API
 this.setState({isLoggedIn: "loading"})
@@ -131,9 +158,10 @@ registerClick(e){
   e.preventDefault()
   let btn = document.getElementById('register-button')
 
-  var redirectUri = window.location.href.split('?')[0]
+  let host = window.location.hostname
+  let port = host === 'localhost' ? `:${window.location.port}/callback` : '';
+  let redirectUri = `${window.location.protocol}//${host}${port}`
   var authCode = this.urlParam('code')
-  alert(authCode)
   var invitationCode = document.getElementById('invCode').value
 
 //POST request to API
@@ -177,7 +205,7 @@ handleSettingsClick(){
     if(isLoggedIn=="yes"){
 
       //The header (navbar) component will have the username and role + Logout button
-      header = <NavHeader onClickSettings={this.handleSettingsClick} onClickLogout={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
+      header = <NavHeader onClickLogout={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
 
       switch(Auth.user.role){
         case "administrator":
