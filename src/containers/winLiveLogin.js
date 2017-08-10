@@ -105,7 +105,7 @@ var authCode = this.urlParam('code')
 let apiUrl = 'https://login.live.com/oauth20_authorize.srf';
 let clientId = '65973b85-c34f-41a8-a4ad-00529d1fc23c';
 let scopes = 'wl.basic wl.offline_access wl.signin wl.phone_numbers wl.emails';
-let redirectUri = window.location.protocol+"//"+ window.location.hostname+":" +window.location.port+ "/";
+let redirectUri = window.location.protocol+"//"+ window.location.hostname+":" +window.location.port;
 
 
 var authRequestUri = apiUrl + '?client_id=' + clientId + '&scope=' + encodeURIComponent(scopes) + '&response_type=code&redirect_uri=' + encodeURIComponent(redirectUri);
