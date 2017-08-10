@@ -63,7 +63,7 @@ var self = this
  var authCode = this.urlParam('code')
  winLiveToken.innerHTML = authCode
  //let redirectUri = window.location.href.split('?')[0];
-let redirectUri = "http://localhost:3000/callback"
+let redirectUri = window.location.protocol+"//"+ window.location.hostname+":" +window.location.port;
 //trying to retrieve Fizzyo API auth token if the Windows Token has been already retrieved
   if(authCode!=null && authCode!="undefined"){
 
