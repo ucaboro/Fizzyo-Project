@@ -61,7 +61,7 @@ var self = this
  let winLiveToken = document.getElementById("windows-live-token")
  var authCode = this.urlParam('code')
  winLiveToken.innerHTML = authCode
- let redirectUri = window.location.href.split('?')[0] + "/callback";
+ let redirectUri = window.location.href.split('?')[0];
 
 //trying to retrieve Fizzyo API auth token if the Windows Token has been already retrieved
   if(authCode!=null && authCode!="undefined"){

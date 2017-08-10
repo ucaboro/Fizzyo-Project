@@ -61,7 +61,7 @@ export default class MainPage extends Component {
 
               <Switch>
                 <Route exact path="/patients" component={Patients}/>
-                <Route path="/patients/:patientID" component={PatientData}/>
+                <Route path="/patients/:patientID/:patientName" component={PatientData}/>
               </Switch>
 
 

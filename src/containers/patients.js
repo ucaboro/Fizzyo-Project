@@ -8,29 +8,8 @@ import Spinner from 'react-spinkit'
 import request from 'superagent'
 import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
 
-
-
-
-
 // Imagine you have a list of names that you'd like to autosuggest.
-const patients = [
-  {
-    name: 'Anton',
-    surname: 'Morozov',
-    email: 'mas1311@ya.ru'
-  },
-  {
-    name: 'James',
-    surname: 'McAdden',
-    email: 'jimmy1@live.com'
-  },
-  {
-    name: 'Andrew',
-    surname: 'Jackson',
-    email: 'andrew@live.com'
-  },
-
-];
+const patients = [];
 
 //Debouncing to stabilise browser performance
 function randomDelay() {
@@ -44,7 +23,7 @@ const getSuggestions = value => {
   const inputLength = inputValue.length;
 
   return inputLength === 0 ? allSuggestions() : patients.filter(lang =>
-    lang.name.toLowerCase().slice(0, inputLength) === inputValue
+    lang.firstName.toLowerCase().slice(0, inputLength) === inputValue
   );
 };
 
@@ -56,7 +35,7 @@ const allSuggestions = () => {
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.name +" "+ suggestion.surname;
+const getSuggestionValue = suggestion => suggestion.firstName +" "+ suggestion.lastName;
 
 
 //to use when rendering fr blank input
@@ -69,14 +48,14 @@ function alwaysRenderSuggestions() {
 const renderSuggestion = suggestion => (
   <Grid>
     <Row>
-            <Link to={`patients/${suggestion.name}`} activeClassName="active">
-      <Col md={4}>
+            <Link to={`patients/${suggestion.id}/${suggestion.firstName}`} activeClassName="active">
+      <Col md={2}>
 
     <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png"/>
     </Col>
-    <Col md={8}>
-      <h5>{suggestion.id}</h5>
-    <h3>{suggestion.name + " " + suggestion.surname}</h3> <br/>
+    <Col md={10}>
+      <h5>{suggestion.userId}</h5>
+    <h3>{suggestion.firstName + " " + suggestion.lastName}</h3> <br/>
     <p>{suggestion.email}</p>
 
     </Col>
@@ -85,24 +64,23 @@ const renderSuggestion = suggestion => (
   </Grid>
 )
 
+
+
+
+
+
 class SearchLoader extends Component {
   constructor(props) {
     super(props);
-
   }
+
+
   render(){
 
       return <Spinner className="searchLoader" name="ball-clip-rotate" color="steelblue"></Spinner>
   }
 }
 
-//customising input field to visualise debouncing
-const renderInputComponent = (inputProps) => (
-  <div className="inputContainer">
-  <input {...inputProps} />
-  <SearchLoader {...inputProps}/>
-  </div>
-);
 
 export default class Example extends Component {
   constructor() {
@@ -120,28 +98,39 @@ export default class Example extends Component {
     };
     // 5000ms debouncing.
     this.debouncedLoadSuggestions = _.debounce(this.loadSuggestions, 500);
+
+    /*
+    *preventing repeating "componentDidMount" update if the user accesses the page
+    *after being in another route.
+    *The condition is needed to avoid multiple rendering
+    */
+    if(this.state.suggestions.length==0){
+
+     this.setState({isLoading:true})
+     var self = this
+      //retrieving patient records from the API
+      request
+      .get('https://api.fizzyo-ucl.co.uk/api/v1/patient-records')
+      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .set('Authorization', "Bearer " + Auth.accessToken)
+
+      .end(function(err, res){
+       if (err || !res.ok) {
+            alert(err)
+          } else {
+              //setting the state to show at the page load
+              self.setState({suggestions: res.body.records})
+          }
+          //pushing to reserved patient array one by one
+          for(var i=0; i<res.body.records.length; i++){
+            patients.push(res.body.records[i])
+          }
+        })
+    }
   }
 
-/*    componentWillMount(){
-    //retrieving patient records from the API
-    request
-    .get('https://api.fizzyo-ucl.co.uk/api/v1/patient-records')
-    .set('Content-Type', 'application/x-www-form-urlencoded')
-    .set('Authorization', "Bearer " + Auth.accessToken)
-
-    .end(function(err, res){
-     if (err || !res.ok) {
-          alert(err)
-        } else {
-          alert("success " + JSON.stringify(res.body.length))
 
 
-          {patients.push(res.body.request)}
-          //generatedCode.value = JSON.stringify(res.body.code)
-
-        }
-      })
-  }*/
 
   loadSuggestions(value) {
     this.setState({
@@ -185,6 +174,8 @@ setTimeout(() => {
     });
   };
 
+
+
   render() {
     const { value, suggestions, isLoading } = this.state;
 
@@ -198,16 +189,23 @@ setTimeout(() => {
       // Finally, render it!
     return (
       <div className="PatientRecords">
-        <Grid>
+
         <Panel header = "Select the patient" bsStyle = "primary" >
           <Row>
+          <Col md={10}>
           <Alert bsStyle="info">
+          <Col>
             <p>To <strong>select a patient </strong> start typing their name</p>
-            <p>Select a patient and click "Edit" or click "Add New" to add a new one</p>
-          </Alert>
+            <p>Select a patient to access their data or click "Add" to add a new one</p>
+          </Col>
+        </Alert>
+      </Col>
+      <Col md={2}>
+        <Button className="patientsBtn" bsStyle="success">Add</Button>
+      </Col>
         </Row>
-        <Row className="searchAndAdd">
-        <Col md={8} sm={8} xs={4}>
+        <Row className="searchAndAdd top-buffer">
+        <Col md={12} sm={12} xs={12}>
 
       <Autosuggest
         suggestions={suggestions}
@@ -216,110 +214,16 @@ setTimeout(() => {
         alwaysRenderSuggestions = {alwaysRenderSuggestions}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
-        renderInputComponent={renderInputComponent}
       />
 
 
 
     </Col>
-    <Col md={4} sm={4}  xs={8}>
-
-    <Button className="patientsBtn" bsStyle="primary">Edit</Button>
-
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    <Button className="patientsBtn" bsStyle="success">Add</Button>
-    </Col>
 
     </Row>
   </Panel>
-</Grid>
+
   </div>
     );
   }
 }
-
- class PatientsPrev extends Component {
-  render() {
-    return (
-      <div className="container">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h1>
-              Patient Records
-              <button type="button" className="btn btn-success addPatient">Add New Patient</button>
-            </h1>
-
-          </div>
-
-          <div className="panel-body">
-
-            <div className="row">
-
-              <div className="col">
-                <div className="input-group">
-
-                  <input type="text" className="form-control" placeholder="Search for patients..."></input>
-                  <span className="input-group-btn">
-                    <button className="btn btn-default" type="button">Go!</button>
-                  </span>
-                </div>
-              </div>
-
-              <div className="row top-buffer">
-
-                <div className="col">
-
-                  <table className="table table-hover table-striped table-bordered">
-
-                    <thead>
-                      <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-
-                      <tr>
-                        <td>
-                          <NavLink to="/patients/patientData">
-                            John
-                          </NavLink>
-                        </td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
-
-                      </tr>
-
-                      <tr>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                      </tr>
-                      <tr>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-const PatientData = () => (
-  <div className="container">
-    <h1>Patients Data here</h1>
-  </div>
-
-)
