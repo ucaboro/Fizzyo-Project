@@ -24,7 +24,8 @@ export default class PatientsData extends Component {
     super(props)
     this.state = {
       fieldComponents: [],
-      isLoading: false
+      isLoading: false,
+      view: "view"
     }
     //this.getFieldsFromAPI = this.getFieldsFromAPI.bind(this)
 
@@ -52,14 +53,71 @@ export default class PatientsData extends Component {
 
   }
 
+  handleEditClick(){
+    this.setState({view: "edit"})
+
+    var id = this.props.match.params.patientID
+    var fieldComponent = []
+    var self = this
+    this.setState({isLoading: true})
+    //getting all the fields from the API
+    request.get(`https://api.fizzyo-ucl.co.uk/api/v1/patient-records/${id}/edit`)
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    .set('Authorization', "Bearer " + Auth.accessToken)
+    .end(function(err, res) {
+      if (err || !res.ok) {
+        alert(err)
+      } else {
+        //passing the data to variables
+        //var response = JSON.parse(res.body)
+        var fields = res.body.data
+        self.setState({fieldComponents: fields, isLoading: false})
+        }
+      })
+  }
+
+  handleDashboardClick(){
+    this.setState({view: "dashboard"})
+    // TODO: linking to the filtered dashboard
+  }
+
+
+
 
   render() {
-    let items = this.state.fieldComponents
-    let page = ''
-    if (this.state.isLoading == true){
-      page = <Spinner className="patientsLoader" name="ball-clip-rotate-multiple" color="steelblue"></Spinner>
-    } else {
-      page = <div>{items.map(item => <Fields key={item.name} fields={item}/>)}</div>
+  let screen= ''
+  //switching between the pages
+  switch(this.state.view){
+    case "view":
+    //setting up viewing data screen
+      let items = this.state.fieldComponents
+      var page = ''
+      if (this.state.isLoading == true){
+        page = <Spinner className="patientsLoader" name="ball-clip-rotate-multiple" color="steelblue"></Spinner>
+      } else {
+        page = <div>{items.map(item => <Fields key={item.name} fields={item}/>)}</div>
+      }
+
+    break
+    case "edit":
+
+      if (this.state.isLoading == true){
+        page = <Spinner className="patientsLoader" name="ball-clip-rotate-multiple" color="steelblue"></Spinner>
+      } else {
+        page = <div>{items.map(item => <Fields key={item.name} fields={item}/>)}</div>
+      }
+      break
+
+    // TODO: add screen for the dashboard
+
+  }
+
+    var editBtn = ''
+    if(Auth.user.role=="md-team"){
+      editBtn = ''
+    }else{
+      editBtn =   <Button className="top-buffer" bsStyle="success" onClick={this.handleEditClick}>Edit {this.props.match.params.patientName}&apos;s details</Button>
+
     }
 
     return (
@@ -68,7 +126,7 @@ export default class PatientsData extends Component {
 
         <Panel header={this.props.match.params.patientName + "'s details"} bsStyle="primary">
           <Row>
-            <Button className="top-buffer" bsStyle="success">Edit {this.props.match.params.patientName}&apos;s details</Button>
+            {editBtn}
             &nbsp;
             <Button className="top-buffer" bsStyle="info">View {this.props.match.params.patientName}&apos;s dashboard</Button>
           </Row>

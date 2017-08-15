@@ -185,7 +185,7 @@ const UsersPrevVersion = () => (
           <input type="email" name="email" id="email" className="form-control input-lg" placeholder="Email Address"></input>
           </div>
         </div>
-        <div className="col-xs-6 col-lg-6 col-md-6">
+        <div className="col-xs-6 col-lg-12 col-md-12">
           <div className="form-group">
             <DropdownButtonComp id="role-testing" title="Select Role" option={["researcher", "administrator", "patient" ]}/>
           </div>

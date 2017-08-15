@@ -8,7 +8,7 @@ const Dashboard = () => (
 
       <Panel className="center" header="Airway Clearance" eventKey="1" bsStyle="primary">
         <center>
-        <iframe width="760px" height="500px" src="https://app.powerbi.com/view?r=eyJrIjoiMTg2OWM5ZTMtZTAyYy00MzU2LTk4NTctMzczMDU1OWE5YTlmIiwidCI6IjFmYWY4OGZlLWE5OTgtNGM1Yi05M2M5LTIxMGExMWQ5YTVjMiIsImMiOjh9" frameborder="0" allowFullScreen="true"></iframe>
+          <iframe width="760px" height="500px" src="https://app.powerbi.com/view?r=eyJrIjoiY2E4MTI2YmItM2M2Yi00ZWExLTlkNDEtNDA1ODgxNzhiODNhIiwidCI6IjFmYWY4OGZlLWE5OTgtNGM1Yi05M2M5LTIxMGExMWQ5YTVjMiIsImMiOjh9&filter=mainTable/Name eq 'Claire'" frameborder="0" allowFullScreen="true"></iframe>
         </center>
       </Panel>
 

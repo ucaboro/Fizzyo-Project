@@ -7,6 +7,7 @@ import debounce from 'lodash';
 import Spinner from 'react-spinkit'
 import request from 'superagent'
 import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
+import IsolatedScroll from 'react-isolated-scroll';
 
 // Imagine you have a list of names that you'd like to autosuggest.
 const patients = [];
@@ -48,18 +49,21 @@ function alwaysRenderSuggestions() {
 const renderSuggestion = suggestion => (
   <Grid>
     <Row>
+      <span>
             <Link to={`patients/${suggestion.id}/${suggestion.firstName}`} activeClassName="active">
       <Col md={2}>
 
     <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png"/>
     </Col>
     <Col md={10}>
+
       <h5>{suggestion.userId}</h5>
     <h3>{suggestion.firstName + " " + suggestion.lastName}</h3> <br/>
     <p>{suggestion.email}</p>
 
     </Col>
         </Link>
+      </span>
     </Row>
   </Grid>
 )
@@ -192,21 +196,19 @@ setTimeout(() => {
 
         <Panel header = "Select the patient" bsStyle = "primary" >
           <Row>
-          <Col md={10}>
+          <Col md={12}>
           <Alert bsStyle="info">
           <Col>
             <p>To <strong>select a patient </strong> start typing their name</p>
-            <p>Select a patient to access their data or click "Add" to add a new one</p>
+            <p>Select a patient to access their data</p>
           </Col>
         </Alert>
       </Col>
-      <Col md={2}>
-        <Button className="patientsBtn" bsStyle="success">Add</Button>
-      </Col>
+
         </Row>
         <Row className="searchAndAdd top-buffer">
         <Col md={12} sm={12} xs={12}>
-
+        <p>Patients in the system: {this.state.suggestions.length} </p>
       <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

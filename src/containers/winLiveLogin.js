@@ -10,7 +10,7 @@ import SideMenu from '../components/SideMenu.js'
 import Dashboard from '../containers/dashboard.js'
 import Spinner from 'react-spinkit'
 import logo from '../components/fizzyo_logo.svg'
-import LoginControl from '../containers/login.js'
+
 
 
 
@@ -62,7 +62,8 @@ var self = this
  let winLiveToken = document.getElementById("windows-live-token")
  var authCode = this.urlParam('code')
 
- winLiveToken.innerHTML =  authCode
+//removing uneccessary token visual
+ //winLiveToken.innerHTML =  authCode
 
  let host = window.location.hostname
  let port = host === 'localhost' ? `:${window.location.port}/callback` : '';
@@ -192,6 +193,50 @@ handleSettingsClick(){
 <Link to="/syssettings"/>
 }
 
+testLoginClick = () =>{
+    let roleBtn = document.getElementById('role-testing')
+    let selectedRole = roleBtn.options[roleBtn.selectedIndex].value
+
+    let username = null;
+    //setting the testing role based on the selected role
+    switch(selectedRole){
+      case "administrator": username = "test-admin"
+       break
+      case "researcher": username = "test-researcher"
+       break
+      case "md-team": username = "test-md-team"
+        break
+      case "patient": username = "test-patient"
+        break
+
+    }
+
+    let password = "FizzyoTesting2017"
+    //setting response message in HTML
+    let responseMsg = document.getElementById('test-user-login')
+    var self = this
+    request
+  .post('https://api.fizzyo-ucl.co.uk/api/v1/auth/test-token')
+  .set('Content-Type', 'application/x-www-form-urlencoded')
+  .send({ username, password})
+  .end(function(err, res){
+    if (err || !res.ok) {
+         console.log("test user login error" +err)
+       } else {
+
+         //Setting LoggedIn user's variables
+         Auth.accessToken = res.body.accessToken
+         Auth.user.id = res.body.user.id
+         Auth.user.role = res.body.user.role
+         Auth.user.name = res.body.user.firstName
+         //alert(Auth.accessToken)
+         //Seeting isLoggedIn to true on success
+         self.setState({isLoggedIn : "yes"})
+       }
+     });
+  }
+
+
 
   render(){
 
@@ -209,19 +254,22 @@ handleSettingsClick(){
 
       switch(Auth.user.role){
         case "administrator":
-          page =<MainPage options={[ "Dashboard", "Users", "Patients", "System Status", "System Settings"]}/>
+          page =<MainPage options={[ "Dashboard", "Create Invitation", "Patient records", "System Settings"]}/>
         break
         case "researcher":
-          page =<MainPage options={["Dashboard", "Users", "Patients"]}/>
+          page =<MainPage options={["Dashboard", "Create Invitation", "Patient records"]}/>
+        break
+        case "md-team":
+          page =<MainPage options={["Dashboard", "Create Invitation", "Patient records"]}/>
         break
         case "patient":
-          page =<Dashboard />
+          page =<MainPage options={["Dashboard"]}/>
         break
       }
 
     } if(isLoggedIn=="no"){
       header = <NavHeader disabled="disabled"/>
-      page =  <LoginRegister toRegister={this.switchToRegister} backToLogin={this.switchToLogin} onRegisterLive={this.registerClick} onLive = {this.redirectToWindowsLive} status={this.state.registerScreen}/>
+      page =  <LoginRegister toRegister={this.switchToRegister} backToLogin={this.switchToLogin} onRegisterLive={this.registerClick} onLive = {this.redirectToWindowsLive} testLogin={this.testLoginClick} status={this.state.registerScreen}/>
 
     }if(isLoggedIn=="loading"){
       header = <NavHeader disabled="disabled"/>
@@ -243,14 +291,14 @@ const LoginRegister = (props) => {
 let page = ''
 let testing = ''
 if (props.status==false){
- page = <Login onRegisterSwitch={props.toRegister} toLive={props.onLive} />
- testing = <LoginControl/>
+ page = <Login onTestLoginClick={props.testLogin}onRegisterSwitch={props.toRegister} toLive={props.onLive} />
+
 
 } else {
  page = <Register onRegisterClick={props.onRegisterLive} onLoginSwitch={props.backToLogin} toLive={props.onLive} />
 }
 
-return (<div>{page}{testing}</div>)
+return (<div>{page}</div>)
 }
  const Login = (props) => {
 
@@ -267,10 +315,22 @@ return (<div>{page}{testing}</div>)
         <button onClick={props.toLive} id="windows-live-button" >LOGIN with Windows Live</button>
           <Info/>
 
-        <p className="message">Have an invite? <Button  onClick={props.onRegisterSwitch}>Register</Button></p>
+        <button className="top-buffer"  onClick={props.onRegisterSwitch}>Register</button>
           </form>
         </div>
       </div>
+    </Col>
+  </Row>
+
+  <Row className = "center">
+    <Col md={12}>
+      <Panel header="Testing user authorisation with different roles" bsStyle="primary">
+      <DropdownButtonComp id="role-testing" title="Select Role" option={["administrator", "researcher", "md-team", "patient" ]}/>
+
+      <Col md={12}>
+      <Button className= "top-buffer center" id="login-user-button" bsStyle="primary" onClick={props.onTestLoginClick}>Login</Button>
+      </Col>
+    </Panel>
     </Col>
   </Row>
 </Grid>
@@ -279,7 +339,7 @@ return (<div>{page}{testing}</div>)
 }
 
 const Info = (props) =>{
- return(<div><Alert id="windows-live-token" bsStyle="info"></Alert></div>)
+ return(<div></div>)
 }
 
 

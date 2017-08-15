@@ -11,6 +11,7 @@ import Spinner from 'react-spinkit'
 import Debounce from './containers/debouncetest.js'
 import PatientData from './containers/patientsData.js'
 import Syssettings from './containers/systemSettings.js'
+import PatientEdit from './containers/patientsEdit.js'
 
 export default class App extends Component {
   constructor() {

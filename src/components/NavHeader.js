@@ -18,14 +18,21 @@ export default class NavHeader extends Component{
   constructor(props) {
     super(props)
 }
+
+goToDash(){
+  <Link to="/dashboard"/>
+}
   render(){
     return(
       <Router>
       <div>
       <Navbar inverse collapseOnSelect fluid>
           <Navbar.Header>
+
             <Navbar.Brand>
-              <img src={logo} className="App-logo" alt="logo" />
+
+            <img src={logo} className="App-logo" alt="logo"/>
+
             </Navbar.Brand>
 
 

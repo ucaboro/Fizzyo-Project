@@ -21,12 +21,13 @@ import Users from '../containers/users.js'
 import Dashboard from '../containers/dashboard.js'
 import Patients from '../containers/patients.js'
 import PatientData from '../containers/patientsData.js'
-import Login, {Auth} from '../containers/login.js'
+import Login from '../containers/login.js'
 import Systatus from '../containers/systemStatus.js'
 import Syssettings from '../containers/systemSettings.js'
 
 import Fetch from 'react-fetch'
 import request from 'superagent'
+import {Auth} from '../containers/winLiveLogin.js'
 
 
 
@@ -36,7 +37,45 @@ export default class MainPage extends Component {
     super(props)
   }
 
+
   render(){
+
+      var page = ''
+      if(Auth.user.role=="patient"){
+        page = (
+          <div className="row">
+            <div className="col-sm-offset-1 col-md-offset-1 page">
+              <Dashboard/>
+            </div>
+          </div>
+        )
+      }else{
+        page= (
+          <div className="row">
+
+            <SideMenu  option={this.props.options}/>
+
+            <div className="col-sm-offset-2 col-md-offset-2 page">
+            <Route exact path="/" component={Patients}/>
+            <Route path="/home" component={Home}/>
+            <Route path="/users" component={Users}/>
+            <Route path="/dashboard" component={Dashboard}/>
+            <Route path="/systatus" component={Systatus}/>
+            <Route path="/syssettings" component={Syssettings}/>
+            <Route path="/callback" component={Patients}/>
+            <Route path="/login" component={Login}/>
+
+
+            <Switch>
+              <Route exact path="/patients" component={Patients}/>
+              <Route path="/patients/:patientID/:patientName" component={PatientData}/>
+            </Switch>
+
+
+            </div>
+  </div>
+        )
+      }
     return(
 
       <Router>
@@ -44,32 +83,10 @@ export default class MainPage extends Component {
         <div>
 
           <div className="container-fluid belowNavBar">
-            <div className="row">
-
-              <SideMenu  option={this.props.options}/>
-
-              <div className="col-sm-offset-2 col-md-offset-2 page">
-              <Route exact path="/" component={Patients}/>
-              <Route path="/home" component={Home}/>
-              <Route path="/users" component={Users}/>
-              <Route path="/dashboard" component={Dashboard}/>
-              <Route path="/systatus" component={Systatus}/>
-              <Route path="/syssettings" component={Syssettings}/>
-              <Route path="/callback" component={Patients}/>
-              <Route path="/login" component={Login}/>
-
-
-              <Switch>
-                <Route exact path="/patients" component={Patients}/>
-                <Route path="/patients/:patientID/:patientName" component={PatientData}/>
-              </Switch>
-
-
-              </div>
-
+          {page}
             </div>
           </div>
-        </div>
+
 
       </Router>
     )

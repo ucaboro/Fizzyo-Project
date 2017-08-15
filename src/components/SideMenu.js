@@ -33,11 +33,11 @@ export default class SideMenu extends Component {
           this.state.link[i] = "/dashboard"
           this.state.icon[i] = <DashboardIcon/>
           break
-        case "Users":
+        case "Create Invitation":
           this.state.link[i] = "/users"
           this.state.icon[i] = <UserIcon/>
           break
-        case "Patients":
+        case "Patient records":
           this.state.link[i] = "/patients"
           this.state.icon[i] = <PatientIcon/>
           break

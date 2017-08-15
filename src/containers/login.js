@@ -82,14 +82,14 @@ handleLogoutClick(){
 
     if(isLoggedIn){
 
-      header = <NavHeader onClick={this.handleLogoutClick} username={AuthTest.user.name} role={AuthTest.user.role}/>
+      header = <NavHeader onClick={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
 
       switch(AuthTest.user.role){
         case "administrator":
-          page =<MainPage options={["Home", "Dashboard", "Users", "Patients", "System Status", "System Settings"]}/>
+          page =<MainPage options={["Home", "Dashboard", "Create Invitation", "Patient records", "System Status", "System Settings"]}/>
         break
         case "researcher":
-          page =<MainPage options={["Home", "Dashboard", "Users", "Patients"]}/>
+          page =<MainPage options={["Home", "Dashboard", "Create Invitation", "Patient records"]}/>
         break
         case "patient":
           page =<Dashboard />
@@ -133,13 +133,13 @@ function Login (props){
   return(
     <div>
     <Grid>
-    <Row className="top-buffer">
+    <Row className="top-buffer center">
     <Col md={12}>
     <Panel header="Testing user authorisation with different roles" bsStyle="primary">
     <DropdownButtonComp id="role-testing" title="Select Role" option={["researcher", "administrator", "patient" ]}/>
     <Row className="top-buffer">
-    <Col md={3}>
-    <Button id="login-user-button" bsStyle="primary" onClick={props.onClick}>Login</Button>
+    <Col md={12}>
+    <Button className= "center" id="login-user-button" bsStyle="primary" onClick={props.onClick}>Login</Button>
     <p><strong id="test-user-login"></strong></p>
     </Col>
     </Row>
