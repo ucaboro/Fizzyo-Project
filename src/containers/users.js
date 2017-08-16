@@ -79,7 +79,7 @@ Copy() {
   render(){
     return(
       <div className="PatientRecords">
-      <Panel header = "Create an invite for a user" bsStyle = "primary" >
+      <Panel header = "Create an invitation" bsStyle = "primary" >
 
         <Alert bsStyle="info">
           <p><strong>To create an invite: </strong> generate the code for the specified role and pass it to the user to register. </p>

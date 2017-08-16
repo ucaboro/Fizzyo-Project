@@ -38,6 +38,10 @@
   height: 34px;
 }
 
+.icon{
+  height: 65px;
+}
+
 .DashboardTitle {
   float: left;
   padding-left: 2%;
@@ -341,7 +345,8 @@ min-width: 250px !important;
 
 .react-autosuggest__suggestion {
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 10px 0px;
+
 }
 
 .react-autosuggest__suggestion:not(:first-child) {
@@ -426,4 +431,35 @@ background: transparent !important;
 
 .belowNavBar{
 background: white;
+}
+
+/*Styling about page*/
+.business-header {
+    height: 20vh;
+    min-height: 300px;
+    background: #FBFBFB;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.card {
+    height: 100%;
+}
+
+.card-img-top{
+  width: 250px;
+  height: 250px;
+  border-radius: 300px;
+}
+
+.bg-dark{
+background: #222222;
+color: white;
+}
+
+.dashboard{
+  width:100%;
+  height: 100%;
 }

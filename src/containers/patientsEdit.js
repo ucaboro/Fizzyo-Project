@@ -25,6 +25,7 @@ import DatePicker  from "react-bootstrap-date-picker"
 export default class PatientEdit extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       fieldComponents: [],
       isLoading: false,

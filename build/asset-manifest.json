@@ -1,12 +1,19 @@
 {
-  "main.css": "static/css/main.1720628d.css",
-  "main.css.map": "static/css/main.1720628d.css.map",
-  "main.js": "static/js/main.c00f1a95.js",
-  "main.js.map": "static/js/main.c00f1a95.js.map",
+  "main.css": "static/css/main.88374803.css",
+  "main.css.map": "static/css/main.88374803.css.map",
+  "main.js": "static/js/main.01d3594e.js",
+  "main.js.map": "static/js/main.01d3594e.js.map",
+  "static\\media\\Anton.jpg": "static/media/Anton.db4a4854.jpg",
+  "static\\media\\Mabel.JPG": "static/media/Mabel.236d972e.JPG",
+  "static\\media\\Matt.jpg": "static/media/Matt.688230ae.jpg",
+  "static\\media\\Tim.JPG": "static/media/Tim.6750be9f.JPG",
+  "static\\media\\fizzyo_landing.JPG": "static/media/fizzyo_landing.8d8eb517.JPG",
   "static\\media\\fizzyo_logo.svg": "static/media/fizzyo_logo.784b078e.svg",
   "static\\media\\glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
   "static\\media\\glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.89889688.svg",
   "static\\media\\glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
   "static\\media\\glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
-  "static\\media\\glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2"
+  "static\\media\\glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2",
+  "static\\media\\manuel.jpg": "static/media/manuel.3a214cc8.jpg",
+  "static\\media\\user.png": "static/media/user.dd8b96aa.png"
 }

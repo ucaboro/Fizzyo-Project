@@ -18,10 +18,14 @@ import DropdownButtonComp from '../components/DropDown.js'
 import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
 import request from 'superagent'
 import Spinner from 'react-spinkit'
+import Dashboard from '../containers/dashboard.js'
 
 export default class PatientsData extends Component {
   constructor(props) {
     super(props)
+
+    this.viewDashboard = this.viewDashboard.bind(this)
+
     this.state = {
       fieldComponents: [],
       isLoading: false,
@@ -76,12 +80,10 @@ export default class PatientsData extends Component {
       })
   }
 
-  handleDashboardClick(){
-    this.setState({view: "dashboard"})
-    // TODO: linking to the filtered dashboard
+
+  viewDashboard(){
+      this.setState({view: "dashboard"})
   }
-
-
 
 
   render() {
@@ -108,7 +110,14 @@ export default class PatientsData extends Component {
       }
       break
 
-    // TODO: add screen for the dashboard
+    case "dashboard":
+
+        if (this.state.isLoading == true){
+          page = <Spinner className="patientsLoader" name="ball-clip-rotate-multiple" color="steelblue"></Spinner>
+        } else {
+          page = <div><Dashboard name={this.props.match.params.patientName}/></div>
+        }
+        break
 
   }
 
@@ -128,7 +137,7 @@ export default class PatientsData extends Component {
           <Row>
             {editBtn}
             &nbsp;
-            <Button className="top-buffer" bsStyle="info">View {this.props.match.params.patientName}&apos;s dashboard</Button>
+            <Button className="top-buffer" bsStyle="info" onClick={this.viewDashboard}>View {this.props.match.params.patientName}&apos;s dashboard</Button>
           </Row>
          <Row>
            {page}
@@ -160,23 +169,23 @@ class Fields extends Component{
       case "string" :
 
       if (fieldString!=null){
-        page = <Col md={2} xs={12}><h5><b>{fieldName}</b></h5> <h4>{fieldString}</h4></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4>{fieldString}</h4><hr/></Col>
       } else {
-        page = <Col md={2} xs={12}><h5><b>{fieldName}</b></h5> <h4> -----</h4></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4> -----</h4><hr/></Col>
       }
       break
       case "date":
       if (date!=null){
-        page = <Col md={2} xs={12}><h5><b>{fieldName}</b></h5> <h4>{date.getFullYear()+'-'+date.getMonth()+1 + '-' + date.getDate()}</h4></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4>{date.getFullYear()+'-'+date.getMonth()+1 + '-' + date.getDate()}</h4><hr/></Col>
       } else {
-        page = <Col md={2} xs={12}><h5><b>{fieldName}</b></h5> <h4> -----</h4></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4> -----</h4><hr/></Col>
       }
       break
       case "text":
       if (fieldText!=null){
-        page = <Col md={2} xs={12}><h5><b>{fieldName}</b></h5> <h4>{fieldText}</h4></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4>{fieldText}</h4><hr/></Col>
       } else {
-        page = <Col md={2} xs={12}><h5><b>{fieldName}</b></h5> <h4> -----</h4></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4> -----</h4><hr/></Col>
       }
       break
       default:

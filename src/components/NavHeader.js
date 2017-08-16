@@ -13,14 +13,19 @@ import Login from '../containers/login.js'
 import Systatus from '../containers/systemStatus.js'
 import Syssettings from '../containers/systemSettings.js'
 import MainPage from '../containers/mainPage.js'
+import About from '../containers/about.js'
+
 
 export default class NavHeader extends Component{
   constructor(props) {
     super(props)
+
+    this.goToAbout = this.goToAbout.bind(this)
 }
 
-goToDash(){
-  <Link to="/dashboard"/>
+goToAbout(){
+  <Link to="/about"/>
+  return (<About/>)
 }
   render(){
     return(
@@ -45,7 +50,7 @@ goToDash(){
 
             <Nav pullRight>
               <UserGreeting name={this.props.username}/>
-              <NavItem  className={this.props.disabled}  eventKey={3} onClick={this.props.onClickLogout}>Logout</NavItem>
+                <NavItem  className={this.props.disabled}  eventKey={3} onClick={this.props.onClickLogout}>{this.props.loginLogoutText}</NavItem>
             </Nav>
           </Navbar.Collapse>
       </Navbar>

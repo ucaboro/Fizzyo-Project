@@ -10,7 +10,7 @@ import SideMenu from '../components/SideMenu.js'
 import Dashboard from '../containers/dashboard.js'
 import Spinner from 'react-spinkit'
 import logo from '../components/fizzyo_logo.svg'
-
+import About from '../containers/about.js'
 
 
 
@@ -23,7 +23,9 @@ constructor(props){
   this.redirectToWindowsLive = this.redirectToWindowsLive.bind(this)
   this.registerClick = this.registerClick.bind(this)
   this.handleLogoutClick =this.handleLogoutClick.bind(this)
-  this.state = {registerScreen: '', isLoggedIn:"no", toRegister: ''}
+  this.goToAbout = this.goToAbout.bind(this)
+    this.goToLogin = this.goToLogin.bind(this)
+  this.state = {registerScreen: '', isLoggedIn:"", toRegister: ''}
 }
 
 //switch view to the Register screen without redirection
@@ -58,6 +60,7 @@ urlParam(name){
 *
 */
 componentDidMount(){
+
 var self = this
  let winLiveToken = document.getElementById("windows-live-token")
  var authCode = this.urlParam('code')
@@ -164,7 +167,6 @@ registerClick(e){
   let redirectUri = `${window.location.protocol}//${host}${port}`
   var authCode = this.urlParam('code')
   var invitationCode = document.getElementById('invCode').value
-
 //POST request to API
 
 request
@@ -182,7 +184,13 @@ request
   })
 }
 
+goToAbout(){
+  this.setState({isLoggedIn: ""})
+}
 
+goToLogin(){
+  this.setState({isLoggedIn: "no"})
+}
 //Logging out
 handleLogoutClick(){
   this.setState({isLoggedIn: "no"})
@@ -250,11 +258,11 @@ testLoginClick = () =>{
     if(isLoggedIn=="yes"){
 
       //The header (navbar) component will have the username and role + Logout button
-      header = <NavHeader onClickLogout={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role}/>
+      header = <NavHeader onClickLogout={this.handleLogoutClick} username={Auth.user.name} role={Auth.user.role} loginLogoutText="Logout" onClickLogout={this.goToLogin}/>
 
       switch(Auth.user.role){
         case "administrator":
-          page =<MainPage options={[ "Dashboard", "Create Invitation", "Patient records", "System Settings"]}/>
+          page =<MainPage options={[ "Dashboard", "Create Invitation", "Patient records", "User Settings"]}/>
         break
         case "researcher":
           page =<MainPage options={["Dashboard", "Create Invitation", "Patient records"]}/>
@@ -268,14 +276,17 @@ testLoginClick = () =>{
       }
 
     } if(isLoggedIn=="no"){
-      header = <NavHeader disabled="disabled"/>
+      header = <NavHeader loginLogoutText="About" onClickLogout={this.goToAbout}/>
       page =  <LoginRegister toRegister={this.switchToRegister} backToLogin={this.switchToLogin} onRegisterLive={this.registerClick} onLive = {this.redirectToWindowsLive} testLogin={this.testLoginClick} status={this.state.registerScreen}/>
 
     }if(isLoggedIn=="loading"){
       header = <NavHeader disabled="disabled"/>
       page =   <Spinner className="loader" name="ball-scale-multiple" color="steelblue"></Spinner>
-
     }
+  if(isLoggedIn==""){
+    header = <NavHeader loginLogoutText="Login" onClickLogout={this.goToLogin}/>
+    page =  <About/>
+  }
     return(
       <div>
         {header}

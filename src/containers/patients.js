@@ -7,7 +7,7 @@ import debounce from 'lodash';
 import Spinner from 'react-spinkit'
 import request from 'superagent'
 import WinLiveLogin, {Auth} from '../containers/winLiveLogin.js'
-import IsolatedScroll from 'react-isolated-scroll';
+import Avatar from '../components/user.png'
 
 // Imagine you have a list of names that you'd like to autosuggest.
 const patients = [];
@@ -49,21 +49,18 @@ function alwaysRenderSuggestions() {
 const renderSuggestion = suggestion => (
   <Grid>
     <Row>
-      <span>
             <Link to={`patients/${suggestion.id}/${suggestion.firstName}`} activeClassName="active">
-      <Col md={2}>
-
-    <img className="icon" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-128.png"/>
+      <Col md={1}>
+    <img className="icon" src={Avatar}/>
     </Col>
     <Col md={10}>
 
-      <h5>{suggestion.userId}</h5>
-    <h3>{suggestion.firstName + " " + suggestion.lastName}</h3> <br/>
-    <p>{suggestion.email}</p>
+    <h3>{suggestion.firstName + " " + suggestion.lastName}</h3>
+
+    {/*<p>{suggestion.email}</p>*/}
 
     </Col>
         </Link>
-      </span>
     </Row>
   </Grid>
 )
@@ -194,7 +191,7 @@ setTimeout(() => {
     return (
       <div className="PatientRecords">
 
-        <Panel header = "Select the patient" bsStyle = "primary" >
+        <Panel header = "Patient records" bsStyle = "primary" >
           <Row>
           <Col md={12}>
           <Alert bsStyle="info">

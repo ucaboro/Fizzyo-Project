@@ -45,7 +45,7 @@ export default class SideMenu extends Component {
           this.state.link[i] = "/systatus"
           this.state.icon[i] = <SysStatusIcon/>
           break
-        case "System Settings":
+        case "User Settings":
           this.state.link[i] = "/syssettings"
           this.state.icon[i] = <SysSettingsIcon/>
           break

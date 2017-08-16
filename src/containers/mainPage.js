@@ -24,7 +24,7 @@ import PatientData from '../containers/patientsData.js'
 import Login from '../containers/login.js'
 import Systatus from '../containers/systemStatus.js'
 import Syssettings from '../containers/systemSettings.js'
-
+import About from '../containers/about.js'
 import Fetch from 'react-fetch'
 import request from 'superagent'
 import {Auth} from '../containers/winLiveLogin.js'
@@ -45,7 +45,7 @@ export default class MainPage extends Component {
         page = (
           <div className="row">
             <div className="col-sm-offset-1 col-md-offset-1 page">
-              <Dashboard/>
+              <Dashboard name="Garrett"/>
             </div>
           </div>
         )
@@ -64,7 +64,7 @@ export default class MainPage extends Component {
             <Route path="/syssettings" component={Syssettings}/>
             <Route path="/callback" component={Patients}/>
             <Route path="/login" component={Login}/>
-
+            <Route path="/about" component={About}/>
 
             <Switch>
               <Route exact path="/patients" component={Patients}/>
