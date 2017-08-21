@@ -171,25 +171,25 @@ class Fields extends Component{
       if (fieldString!=null){
         page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4>{fieldString}</h4><hr/></Col>
       } else {
-        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4> -----</h4><hr/></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4 className="Unknown">Unknown</h4><hr/></Col>
       }
       break
       case "date":
       if (date!=null){
         page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4>{date.getFullYear()+'-'+date.getMonth()+1 + '-' + date.getDate()}</h4><hr/></Col>
       } else {
-        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4> -----</h4><hr/></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4 className="Unknown">Unknown</h4><hr/></Col>
       }
       break
       case "text":
       if (fieldText!=null){
         page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4>{fieldText}</h4><hr/></Col>
       } else {
-        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4> -----</h4><hr/></Col>
+        page = <Col md={2} xs={12}><hr/><h5><b>{fieldName}</b></h5> <h4 className="Unknown">Unknown</h4><hr/></Col>
       }
       break
       default:
-      console.log("the field type is unknown")
+      console.log("the field type is Unknown")
     }
 
     return (<p>{page}</p>)

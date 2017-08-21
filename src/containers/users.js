@@ -68,7 +68,7 @@ Copy() {
      if (err || !res.ok) {
           alert(err)
         } else {
-          generatedCode.value = JSON.stringify(res.body.code)
+          generatedCode.value = res.body.code
           self.setState({value:generatedCode.value, copied: false})
         }
       })
